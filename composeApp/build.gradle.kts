@@ -7,6 +7,7 @@ plugins {
 }
 
 kotlin {
+    // JVM 이 실행되는 곳
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -14,7 +15,8 @@ kotlin {
             }
         }
     }
-    
+
+    // 앞으로 사용될 장치의 아키텍쳐
     listOf(
         iosX64(),
         iosArm64(),
@@ -34,11 +36,22 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
+            api(compose.foundation)
+            api(compose.animation)
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // Navigation PreCompose
+            api("moe.tlaster:precompose:1.5.10")
+
+            // ViewModel
+            api("moe.tlaster:precompose-viewmodel:1.5.10")
+
+        }
+        iosMain.dependencies {
+
         }
     }
 }
