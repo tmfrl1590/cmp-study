@@ -11,7 +11,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
             }
         }
     }
@@ -38,16 +38,17 @@ kotlin {
             implementation(compose.runtime)
             api(compose.foundation)
             api(compose.animation)
-            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
             // Navigation PreCompose
-            api("moe.tlaster:precompose:1.5.10")
+            api(libs.precompose)
 
             // ViewModel
-            api("moe.tlaster:precompose-viewmodel:1.5.10")
+            api(libs.precompose.viewmodel)
 
         }
         iosMain.dependencies {
@@ -82,11 +83,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlin {
+        jvmToolchain(17)
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.6"
     }
 }
 
