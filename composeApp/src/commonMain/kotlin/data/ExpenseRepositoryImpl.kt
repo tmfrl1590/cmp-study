@@ -13,11 +13,11 @@ class ExpenseRepoImpl(
         return expenseManager.fakeExpenseList
     }
 
-    override suspend fun addExpense(expense: Expense) {
+    override fun addExpense(expense: Expense) {
         expenseManager.addNewExpense(expense)
     }
 
-    override suspend fun editExpense(expense: Expense) {
+    override fun editExpense(expense: Expense) {
         expenseManager.editExpense(expense)
     }
 
