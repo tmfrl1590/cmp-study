@@ -25,81 +25,85 @@ import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import navigation.Navigation
+import org.koin.compose.KoinContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
     PreComposeApp{
-        val colors = getColorsTheme()
+        KoinContext {
+            val colors = getColorsTheme()
 
-        AppTheme {
-            val navigator = rememberNavigator()
-            val titleTopBar = getTitleTopAppBar(navigator)
-            val isEditOnAddExpenses = titleTopBar != TitleTopBarTypes.DASHBOARD.value
+            AppTheme {
+                val navigator = rememberNavigator()
+                val titleTopBar = getTitleTopAppBar(navigator)
+                val isEditOnAddExpenses = titleTopBar != TitleTopBarTypes.DASHBOARD.value
 
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                topBar = {
-                    TopAppBar(
-                        title = {
-                            Text(
-                                text = titleTopBar,
-                                fontSize = 24.sp,
-                                color = colors.textColor
-                            )
-                        },
-                        navigationIcon = {
-                            if(isEditOnAddExpenses){
-                                IconButton(
-                                    onClick = {
-                                        navigator.popBackStack()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(
+                                    text = titleTopBar,
+                                    fontSize = 24.sp,
+                                    color = colors.textColor
+                                )
+                            },
+                            navigationIcon = {
+                                if(isEditOnAddExpenses){
+                                    IconButton(
+                                        onClick = {
+                                            navigator.popBackStack()
+                                        }
+                                    ){
+                                        Icon(
+                                            modifier = Modifier.padding(start = 16.dp),
+                                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                            tint = colors.textColor,
+                                            contentDescription = "Back"
+                                        )
                                     }
-                                ){
+                                }else {
                                     Icon(
                                         modifier = Modifier.padding(start = 16.dp),
-                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        imageVector = Icons.Default.Apps,
                                         tint = colors.textColor,
                                         contentDescription = "Back"
                                     )
                                 }
-                            }else {
+                            }
+                        )
+                    },
+                    floatingActionButton = {
+                        if(!isEditOnAddExpenses){
+                            FloatingActionButton(
+                                modifier = Modifier.padding(8.dp),
+                                onClick = {
+                                    navigator.navigate("/addExpenses")
+                                },
+                                shape = RoundedCornerShape(50),
+                                containerColor = colors.addIconColor,
+                                contentColor = Color.White
+                            ){
                                 Icon(
-                                    modifier = Modifier.padding(start = 16.dp),
-                                    imageVector = Icons.Default.Apps,
-                                    tint = colors.textColor,
-                                    contentDescription = "Back"
+                                    imageVector = Icons.Default.Add,
+                                    tint = Color.White,
+                                    contentDescription = "Add"
                                 )
                             }
-                        }
-                    )
-                },
-                floatingActionButton = {
-                    if(!isEditOnAddExpenses){
-                        FloatingActionButton(
-                            modifier = Modifier.padding(8.dp),
-                            onClick = {
-                                navigator.navigate("/addExpenses")
-                            },
-                            shape = RoundedCornerShape(50),
-                            containerColor = colors.addIconColor,
-                            contentColor = Color.White
-                        ){
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                tint = Color.White,
-                                contentDescription = "Add"
-                            )
-                        }
 
+                        }
                     }
+                ){
+                    Navigation(
+                        navigator = navigator,
+                        modifier = Modifier.padding(it)
+                    )
                 }
-            ){
-                Navigation(
-                    navigator = navigator,
-                    modifier = Modifier.padding(it)
-                )
             }
         }
+
     }
 }
 
