@@ -106,7 +106,7 @@ fun App() {
 @Composable
 fun getTitleTopAppBar(navigator: Navigator): String {
     var titleTopBar = TitleTopBarTypes.DASHBOARD
-    val isOnAddExpenses = navigator.currentEntry.collectAsState(null).value?.route?.route.equals("/addExpenses/{id}")
+    val isOnAddExpenses = navigator.currentEntry.collectAsState(null).value?.route?.route.equals("/addExpenses/{id}?")
     if(isOnAddExpenses){
         titleTopBar = TitleTopBarTypes.ADD
     }
