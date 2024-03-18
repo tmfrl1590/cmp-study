@@ -3,13 +3,11 @@ package org.study.previews
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import data.ExpenseManager
-import model.Expense
 import presentation.ExpenseUiState
 import ui.AllExpensesHeader
 import ui.ExpenseAmount
