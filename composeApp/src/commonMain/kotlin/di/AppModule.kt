@@ -9,7 +9,7 @@ import org.koin.dsl.module
 import presentation.ExpenseViewModel
 
 fun appModule() = module {
-    single{ ExpenseManager}.withOptions { createdAtStart() }
+    single{ ExpenseManager }.withOptions { createdAtStart() }
     single<ExpenseRepository> { ExpenseRepoImpl(get()) }
     factory { ExpenseViewModel(get()) }
 }

@@ -1,9 +1,16 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.sqlDelight)
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.expenseApp.db")
+        }
+    }
 }
 
 kotlin {
@@ -38,6 +45,10 @@ kotlin {
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:3.5.1"))
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-android")
+
+            //Android SQLDelight
+            implementation(libs.sql.android.driver)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -60,10 +71,11 @@ kotlin {
             implementation("io.insert-koin:koin-core")
             implementation("io.insert-koin:koin-compose")
             api("moe.tlaster:precompose-koin:1.5.10")
-
         }
         iosMain.dependencies {
-
+            //iOS SQLDelight
+            implementation(libs.sql.native.driver)
+            implementation("co.touchlab:stately-common:2.0.5")
         }
 
         commonTest.dependencies {
