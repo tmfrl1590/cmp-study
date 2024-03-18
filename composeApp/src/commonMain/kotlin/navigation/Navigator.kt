@@ -11,39 +11,37 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
 import org.koin.core.parameter.parametersOf
-import presentation.ExpenseViewModel
+import presentation.ExpensesViewModel
 import ui.ExpenseDetailScreen
-import ui.ExpenseScreen
+import ui.ExpensesScreen
 
 @Composable
-fun Navigation(
-    navigator: Navigator,
-    modifier: Modifier = Modifier,
-) {
+fun Navigation(navigator: Navigator) {
+
     val colors = getColorsTheme()
-    val viewModel = koinViewModel(ExpenseViewModel::class) { parametersOf() }
+    val viewModel = koinViewModel(ExpensesViewModel::class) { parametersOf() }
 
     NavHost(
-        modifier = modifier.background(colors.backgroundColor),
+        modifier = Modifier.background(colors.backgroundColor),
         navigator = navigator,
         initialRoute = "/home"
-    ){
-        scene(route = "/home"){
+    ) {
+        scene(route = "/home") {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            ExpenseScreen(
-                uiState = uiState,
-            ){ expense ->
+            ExpensesScreen(uiState = uiState, onExpenseClick = { expense ->
                 navigator.navigate("/addExpenses/${expense.id}")
-            }
+            }, onDeleteExpense = { expenseToDelete ->
+                viewModel.deleteExpense(expenseToDelete.id)
+            })
         }
 
         scene(route = "/addExpenses/{id}?") { backStackEntry ->
             val idFromPath = backStackEntry.path<Long>("id")
-            val expenseToEditOrAdd = idFromPath?.let { id -> viewModel.getExpenseWithId(id) }
+            val expenseToEditOrAdd = idFromPath?.let { id -> viewModel.getExpenseWithID(id) }
 
             ExpenseDetailScreen(
-                expenseToEdit = expenseToEditOrAdd
-                //categoryList = viewModel.getCategories()
+                expenseToEdit = expenseToEditOrAdd,
+                categoryList = viewModel.getCategories()
             ) { expense ->
                 if (expenseToEditOrAdd == null) {
                     viewModel.addExpense(expense)
@@ -53,6 +51,7 @@ fun Navigation(
                 navigator.popBackStack()
             }
         }
+
     }
 
 }

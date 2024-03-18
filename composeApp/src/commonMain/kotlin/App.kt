@@ -98,7 +98,6 @@ fun App() {
                 ){
                     Navigation(
                         navigator = navigator,
-                        modifier = Modifier.padding(it)
                     )
                 }
             }

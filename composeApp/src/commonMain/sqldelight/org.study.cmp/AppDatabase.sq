@@ -1,4 +1,3 @@
-
 CREATE TABLE ExpenseEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount REAL NOT NULL,
@@ -6,19 +5,9 @@ CREATE TABLE ExpenseEntity (
     description TEXT NOT NULL
 );
 
-INSERT INTO ExpenseEntity (amount, categoryName, description)
-VALUES
-(70.0, "GROCERIES", "Bought some groceries"),
-(10.0, "SNACKS", "Bought some snacks"),
-(50.0, "CAR", "Filled up the car"),
-(5.0, "COFFEE", "Bought a coffee"),
-(100.0, "PARTY", "Bought some party supplies"),
-(200.0, "HOUSE", "Bought some house supplies"),
-(20.0, "OTHER", "Bought something else");
-
 insert:
 INSERT INTO ExpenseEntity (amount, categoryName, description)
-VALUES (?, ?, ?);
+VALUES (?,?,?);
 
 update:
 UPDATE ExpenseEntity
